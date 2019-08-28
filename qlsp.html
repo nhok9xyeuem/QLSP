@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ung dung quan ly san pham</title>
+    <style>
+        .edit{
+            text-align: center;
+            background-color: chartreuse;
+            width: 10%;
+        }
+        .delete{
+            text-align: center;
+            background-color: dodgerblue;
+            width: 10%;
+        }
+        .crows{
+            height: 100%;
+            width: 80%;
+        }
+        .input{
+            width: 100%;
+            height: 40px;
+            background-color: snow;
+            font-family: Chandas;
+            color: cornflowerblue;
+            font-style: oblique;
+            font-size: 20px;
+        }
+        #input{
+            width: 20%;
+            height: 30px;
+            background-color: aliceblue;
+        }
+        #add{
+            width: 50px;
+            height: 36px;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+<body onload="showItem(arrName)">
+<h2>Add New Product</h2>
+<input id="input">
+<button id="add" onclick="addItem()">Add</button>
+<h2>Display All Product</h2>
+<h4>Product Name</h4>
+<p id="result"></p>
+
+
+<script>
+    let arrName = ["Sony Xperia", "SamSung Galaxy Note 10", "Nokia 6", "Iphone XSMax", "Xiaomi Mi 5s", "Oppo A71"];
+    function addItem() {
+        let addName=document.getElementById('input').value;
+        arrName.push(addName);
+        document.getElementById('input').value='';
+        showItem(arrName);
+    }
+    function showItem(arr) {
+        let result = "<table width='50%'>";
+        for (let i = 0; i < arr.length; i++) {
+            result += "<tr bgcolor='#f5f5dc'>" + "<td ><input class='input'  id='"+i+"-name"+"' value='" + arr[i] + "' disabled></td>" + "<td onclick='completeName(this)' class='edit' id='"+i+"-edit"+"'>Edit</td>" + "<td class='delete' onclick='deleteItem(this)' id='"+i+"-delete"+"'>Delete</td>" + "</tr>";
+        }
+        result += "</table>";
+        document.getElementById('result').innerHTML = result;
+    }
+
+    function completeName(name) {
+        name.id.split("-");
+        if (document.getElementById(name.id[0]+"-name").disabled==true){
+            document.getElementById(name.id[0]+"-name").disabled=false;
+        }else {
+            document.getElementById(name.id[0]+"-name").disabled=true;
+        }
+        let value=document.getElementById(name.id[0]+"-name" ).value;
+        arrName[name.id[0]]=value;
+        console.log(arrName);
+    }
+    function deleteItem(del) {
+        del.id.split("-");
+        let value=document.getElementById(del.id[0]+"-name" ).value;
+        if (confirm("ban co muon xoa item khong")) {
+            arrName.splice(del.id[0], 1);
+        }
+        showItem(arrName);
+    }
+</script>
+</body>
+</html>
